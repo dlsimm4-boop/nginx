@@ -336,7 +336,7 @@ D=__JENKINS_EMBEDDED_EOF__
     rel="\${f#site/}"
     echo
     echo "# ---- Content: \${rel} ----"
-    echo "COPY <<'$D' /usr/share/nginx/html/\${rel}"
+        echo "COPY <<'$D' /usr/share/nginx/html/\${rel}"
     cat "$f"
     echo "$D"
   done
@@ -351,20 +351,8 @@ cat "$DF"
 '''
             }
         }
+
         stage('Build image from Dockerfile only') {
-            steps {
-                sh '''
-echo "== whoami: $(whoami)"
-echo "== docker binary: $(command -v docker || echo NOT FOUND)"
-docker version 2>&1 || true
-echo "== buildx:"
-docker buildx version 2>&1 || echo "buildx NOT available"
-cd export
-docker build --progress=plain -t "${IMAGE_NAME}:${BUILD_NUMBER}" -t "${IMAGE_NAME}:latest" . 2>&1
-'''
-            }
-        }
-        /*stage('Build image from Dockerfile only') {
             steps {
                 sh '''
 cd export
@@ -373,7 +361,7 @@ docker build -t "${IMAGE_NAME}:${BUILD_NUMBER}" -t "${IMAGE_NAME}:latest" .
 '''
             }
         }
-*/
+
         stage('Run web server') {
             steps {
                 sh '''
