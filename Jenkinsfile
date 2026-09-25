@@ -331,12 +331,12 @@ D=__JENKINS_EMBEDDED_EOF__
   cat server/default.conf
   echo "$D"
 
-  (cd site && find . -type f | sort) | while read -r f; do
-    rel="\${f#./}"
+  find site -type f | sort | while read -r f; do
+    rel="\${f#site/}"
     echo
     echo "# ---- Content: \${rel} ----"
     echo 'COPY <<'\'"$D"'\'' /usr/share/nginx/html/'"\${rel}"
-    cat "site/\${rel}"
+    cat "$f"
     echo "$D"
   done
 
