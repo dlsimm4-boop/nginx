@@ -328,7 +328,7 @@ D=__JENKINS_EMBEDDED_EOF__
   echo 'RUN rm -rf /usr/share/nginx/html/*'
   echo
   echo '# ---- Web server configuration ----'
-  echo 'COPY <<'\'"$D"'\'' /etc/nginx/conf.d/default.conf'
+  echo "COPY <<'$D' /etc/nginx/conf.d/default.conf"
   cat server/default.conf
   echo "$D"
 
@@ -336,7 +336,7 @@ D=__JENKINS_EMBEDDED_EOF__
     rel="\${f#site/}"
     echo
     echo "# ---- Content: \${rel} ----"
-    echo 'COPY <<'\'"$D"'\'' /usr/share/nginx/html/'"\${rel}"
+    echo "COPY <<'$D' /usr/share/nginx/html/\${rel}"
     cat "$f"
     echo "$D"
   done
