@@ -13,6 +13,13 @@
 
 pipeline {
     agent any
+    environment {
+        AWS_REGION  = 'us-east-1'
+        AWS_ACCOUNT = '453812957183'
+        ECR_REGISTRY = "453812957183.dkr.ecr.us-east-2.amazonaws.com/repo01/test66"
+        IMAGE_NAME   = ''
+        IMAGE_TAG    = ''
+    }
 
     options {
         buildDiscarder(logRotator(numToKeepStr: '10'))
@@ -392,7 +399,13 @@ docker exec "${CONTAINER_NAME}" wget -qO- http://127.0.0.1/styles.css  | grep -q
 docker exec "${CONTAINER_NAME}" wget -qO- http://127.0.0.1/build-info.json
 echo
 echo "All content served correctly"
+
+
+
+
+
 '''
+
             }
         }
     }
@@ -410,6 +423,10 @@ echo "All content served correctly"
             script {
                 if (!params.KEEP_RUNNING || currentBuild.currentResult != 'SUCCESS') {
                     sh 'docker rm -f "${CONTAINER_NAME}" >/dev/null 2>&1 || true'
+                    sh "aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_REGISTRY}"
+                    sh "docker tag ${IMAGE_NAME}:${IMAGE_TAG}:latest ${ECR_REGISTRY}/${IMAGE_NAME}:${IMAGE_NAME}:latest"
+                    sh "docker push ${ECR_REGISTRY}/${IMAGE_NAME}:${IMAGE_NAME}:latest
+
                 }
             }
         }
