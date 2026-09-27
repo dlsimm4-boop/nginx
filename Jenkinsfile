@@ -425,7 +425,7 @@ echo "All content served correctly"
                     sh 'docker rm -f "${CONTAINER_NAME}" >/dev/null 2>&1 || true'
                     sh "aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_REGISTRY}"
                     sh "docker tag ${IMAGE_NAME}:${IMAGE_TAG}:latest ${ECR_REGISTRY}/${IMAGE_NAME}:${IMAGE_NAME}:latest"
-                    sh "docker push ${ECR_REGISTRY}/${IMAGE_NAME}:${IMAGE_NAME}:latest
+                    sh "docker push ${ECR_REGISTRY}/${IMAGE_NAME}:${IMAGE_NAME}:latest"
 
                 }
             }
