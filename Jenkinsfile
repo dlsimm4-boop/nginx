@@ -13,13 +13,7 @@
 
 pipeline {
     agent any
-    environment {
-        AWS_REGION  = 'us-east-1'
-        AWS_ACCOUNT = '453812957183'
-        ECR_REGISTRY = "453812957183.dkr.ecr.us-east-2.amazonaws.com/repo01/test66"
-        IMAGE_NAME   = ''
-        IMAGE_TAG    = ''
-    }
+    
 
     options {
         buildDiscarder(logRotator(numToKeepStr: '10'))
@@ -37,6 +31,11 @@ pipeline {
     environment {
         CONTAINER_NAME  = 'cool-webserver'
         DOCKER_BUILDKIT = '1'
+        AWS_REGION  = 'us-east-1'
+        AWS_ACCOUNT = '453812957183'
+        ECR_REGISTRY = "453812957183.dkr.ecr.us-east-2.amazonaws.com/repo01/test66"
+        IMAGE_NAME   = ''
+        IMAGE_TAG    = ''
     }
 
     stages {
