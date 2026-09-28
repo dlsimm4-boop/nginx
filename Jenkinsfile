@@ -398,8 +398,8 @@ docker exec "${CONTAINER_NAME}" wget -qO- http://127.0.0.1/styles.css  | grep -q
 docker exec "${CONTAINER_NAME}" wget -qO- http://127.0.0.1/build-info.json
 echo
 echo "All content served correctly"
-docker.withRegistry("${ECR_REGISTRY}", "${AWS_REGION}:awssecrets") 
-appImage.push("${CONTAINER_NAME}")
+echo docker.withRegistry("${ECR_REGISTRY}", "${AWS_REGION}:awssecrets") 
+echo appImage.push("${CONTAINER_NAME}")
 
 
 
