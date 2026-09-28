@@ -419,9 +419,10 @@ echo "All content served correctly"
                     sh 'docker rm -f "${CONTAINER_NAME}" >/dev/null 2>&1 || true'
                 }
             }
-            sh docker.withRegistry("${ECR_REGISTRY}", "${AWS_REGION}:awssecrets") 
-            sh appImage.push("${CONTAINER_NAME}")                    
+                               
            
         }
+        sh docker.withRegistry("${ECR_REGISTRY}", "${AWS_REGION}:awssecrets") 
+        sh appImage.push("${CONTAINER_NAME}") 
     }
 }
