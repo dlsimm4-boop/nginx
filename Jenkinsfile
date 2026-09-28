@@ -398,6 +398,8 @@ docker exec "${CONTAINER_NAME}" wget -qO- http://127.0.0.1/styles.css  | grep -q
 docker exec "${CONTAINER_NAME}" wget -qO- http://127.0.0.1/build-info.json
 echo
 echo "All content served correctly"
+docker.withRegistry("${ECR_REGISTRY}", "${AWS_REGION}:awssecrets") 
+appImage.push("${CONTAINER_NAME}")
 
 
 
@@ -417,10 +419,9 @@ echo "All content served correctly"
             echo "Web server image: ${params.IMAGE_NAME}:${env.BUILD_NUMBER}"
             echo "Exported Dockerfile archived as a build artifact: export/Dockerfile"
             echo "Browse to http://<jenkins-agent-host>:${params.HOST_PORT}/"
-            docker.withRegistry("${ECR_REGISTRY}", "${AWS_REGION}:awssecrets") 
-            appImage.push("${CONTAINER_NAME}")
+            
                 }
-                
+
         cleanup {
             script {
                 if (!params.KEEP_RUNNING || currentBuild.currentResult != 'SUCCESS') {
