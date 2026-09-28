@@ -417,7 +417,10 @@ echo "All content served correctly"
             echo "Web server image: ${params.IMAGE_NAME}:${env.BUILD_NUMBER}"
             echo "Exported Dockerfile archived as a build artifact: export/Dockerfile"
             echo "Browse to http://<jenkins-agent-host>:${params.HOST_PORT}/"
-        }
+            docker.withRegistry("${ECR_REGISTRY}", "${AWS_REGION}:awssecrets") 
+            appImage.push("${CONTAINER_NAME}")
+                }
+                
         cleanup {
             script {
                 if (!params.KEEP_RUNNING || currentBuild.currentResult != 'SUCCESS') {
@@ -425,9 +428,7 @@ echo "All content served correctly"
                     //sh "aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_REGISTRY}"
                     //sh "docker tag ${IMAGE_NAME}:${IMAGE_TAG}:latest ${ECR_REGISTRY}/${IMAGE_NAME}:${IMAGE_NAME}:latest"
                     //sh "docker push ${ECR_REGISTRY}/${IMAGE_NAME}:${IMAGE_NAME}:latest"
-                    docker.withRegistry("${ECR_REGISTRY}", "${AWS_REGION}:awssecrets") 
-                    appImage.push("${CONTAINER_NAME}")
-                    appImage.push("latest")
+                    
 
 
                 }
