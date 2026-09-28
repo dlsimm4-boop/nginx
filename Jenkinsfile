@@ -422,7 +422,6 @@ echo "All content served correctly"
                                
            
         }
-        sh docker.withRegistry("${ECR_REGISTRY}", "${AWS_REGION}:awssecrets") 
-        sh appImage.push("${CONTAINER_NAME}") 
+        
     }
 }
