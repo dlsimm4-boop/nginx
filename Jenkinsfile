@@ -421,12 +421,12 @@ echo "All content served correctly"
         cleanup {
             script {
                 if (!params.KEEP_RUNNING || currentBuild.currentResult != 'SUCCESS') {
-                    //sh 'docker rm -f "${CONTAINER_NAME}" >/dev/null 2>&1 || true'
+                    sh 'docker rm -f "${CONTAINER_NAME}" >/dev/null 2>&1 || true'
                     //sh "aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_REGISTRY}"
                     //sh "docker tag ${IMAGE_NAME}:${IMAGE_TAG}:latest ${ECR_REGISTRY}/${IMAGE_NAME}:${IMAGE_NAME}:latest"
                     //sh "docker push ${ECR_REGISTRY}/${IMAGE_NAME}:${IMAGE_NAME}:latest"
                     docker.withRegistry("${ECR_REGISTRY}", "${AWS_REGION}:awssecrets") 
-                    appImage.push("${IMAGE_NAME}")
+                    appImage.push("${CONTAINER_NAME}")
                     appImage.push("latest")
 
 
